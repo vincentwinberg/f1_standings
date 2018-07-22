@@ -1,10 +1,9 @@
 import bs4 as bs
 import urllib.request
-import numpy as np
 
-header_data = [] #initiates header data
-row_data = [] #inititates row data
-drivers = [] #initiates drivers list & their standing
+driver_data = [] #initiates header data
+points_data = [] #inititates row data
+standings_data = []
 
 source = urllib.request.urlopen('https://www.bbc.com/sport/formula1/drivers-world-championship/standings').read() #current standings on bbc
 soup = bs.BeautifulSoup(source, 'lxml')
@@ -13,28 +12,36 @@ table = soup.find('table') #finds all tables
 
 table_rows = table.find_all('tr') #finds all table rows
 
-for row in table_rows:
-    cols = row.find_all('td')
+for points in table_rows:
+    cols = points.find_all('td', class_="table__cell table__cell--right")
     cols = [ele.text.strip() for ele in cols]
-    row_data.append([ele for ele in cols if ele])
+    points_data.append([ele for ele in cols if ele])
 
-for header in table_rows:
-    cols = header.find_all('th')
+for driver in table_rows:
+    cols = driver.find_all('abbr', class_="medium-abbr-off")
     cols = [ele.text.strip() for ele in cols]
-    header_data.append([ele for ele in cols if ele])
+    driver_data.append([ele for ele in cols if ele])
 
-header_data.remove(['Rank', 'Driver', 'Team', 'Wins', 'Points']) #removes fluff
-header_data.remove([]) #this too
+points_data.remove([])
 
-test = []
-x = 0
+#numbers = [int(x) for x in points_data]
 
-for n in header_data:
-    drivers.append(n)
-    x = (x + 1)
+points = []
+driver = []
+points_int = []
 
-for n in range(0, 21):
-    drivers = (drivers[n][1])
-    n += 1
-#print(test)
-#print(header_data)
+
+for sublist in points_data: #flattens the lists
+    for item in sublist:
+        points.append(item)
+
+for sublist in driver_data:
+    for item in sublist:
+        driver.append(item)
+
+for n in points: #converts the points to integers
+    n = int(n)
+    points_int.append(n)
+
+print(driver)
+print(points_int)
