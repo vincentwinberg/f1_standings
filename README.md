@@ -8,5 +8,5 @@ Written in Python using **Flask** and **Beautiful Soup**
 ```
 pip3 install flask
 pip3 install lxml
-pip3 install beautiful4
+pip3 install beautifulsoup4
 ```
