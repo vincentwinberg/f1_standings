@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template
 import bs4 as bs
 import urllib.request
