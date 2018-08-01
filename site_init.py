@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template
 import os
 import bs4 as bs
